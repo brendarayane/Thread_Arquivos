@@ -8,7 +8,8 @@
 #include <sstream>
 #include <utility>  
 #include <math.h>
-#include <time.h>
+#include <ctime>
+
 #include <vector>
 
 using namespace std;
@@ -75,24 +76,40 @@ int WriteMem::run()
     TIMESTAMPED_TEST_DATA my_data;
     int my_cont = -1;
     int cont=0;
-   // char sentido;
+    double velocity_angular;
+    clock_t t1, t0;
+    double t2;
+    int parametro=1;
     
     while(this->is_alive)
     {   
-            
         
         if(cont<cont_aux){
-                my_data.velocidade = Vetor_velocidades[cont]; 
-                }else{
-             my_data.velocidade =0;
-          } 
+            
+        if(Vetor_velocidades[cont]==1){
+            t1=clock();
+            cout<<"t1: "<<t1<<endl;
+            parametro=1;
+        }else if(Vetor_velocidades[cont]==0){
+            t0=clock();
+            
+            if(parametro==1){
+                t1=difftime(t0, t1);
+                t2= ((double)t1)/CLOCKS_PER_SEC;
+                velocity_angular= (0.17453/t2);
+            }
+           
+            my_data.time1 = t2;
+            my_data.velocidade = velocity_angular*5;
+            parametro=0;
+           // t1=difftime(t0, t1);// realiza a diferença entre os tempos de processamento
+        } 
         cont++;
-        
-        //if(sentido=='a'){
-            //cont++;
-        //}
+        }else{
+
+            my_data.velocidade = 0;
+        }
             my_data.data.contador = my_cont++;
-            my_data.time = road_time();
             this->data->write(&my_data, sizeof(TIMESTAMPED_TEST_DATA));
             //std:: cout<< "Escrita"<< std:: endl;
             nanosleep(&this->tim1, &this->tim2);

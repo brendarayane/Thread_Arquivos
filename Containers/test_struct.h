@@ -4,7 +4,7 @@
 
 #ifndef TEST_STRUCT
 #define TEST_STRUCT
-
+#include <time.h>
 #include "../Utils/road_time.h"
 typedef struct
 {
@@ -15,8 +15,9 @@ typedef struct
 
 typedef struct
 {
-    int velocidade;
     
+    double velocidade;
+    double time1;
     road_time_t time;
     TEST_DATA data;
 }TIMESTAMPED_TEST_DATA;
