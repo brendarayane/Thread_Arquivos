@@ -77,32 +77,44 @@ int WriteMem::run()
     int my_cont = -1;
     int cont=0;
     double velocity_angular;
-    clock_t t1, t0;
+    clock_t t1, t0,t3,t6,t7;
     double t2;
     int parametro=1;
-    
+    t6=clock();
+    t6= difftime(t6,t6);
+    t0=clock();
+    t0= difftime(t0,t0);
+    cout<<"t0: "<<t0<<endl;
     while(this->is_alive)
     {   
         
         if(cont<cont_aux){
             
         if(Vetor_velocidades[cont]==1){
-            t1=clock();
+            
+            t1=clock() -t6;
+            
             cout<<"t1: "<<t1<<endl;
             parametro=1;
         }else if(Vetor_velocidades[cont]==0){
-            t0=clock();
             
+            t6=clock() -t1;
+            cout<<"t6: "<<t6<<endl;
+            //t6= clock() -t1;
             if(parametro==1){
-                t1=difftime(t0, t1);
-                t2= ((double)t1)/CLOCKS_PER_SEC;
+                
+                t3=difftime(t1, t0);
+                 //double( clock() - startTime ) / (double)CLOCKS_PER_SEC
+                t2= ((double)t3)/(double)CLOCKS_PER_SEC;
                 velocity_angular= (0.17453/t2);
+                t0=t1;
+                cout<<"t0: "<<t0 <<endl; 
             }
-           
+            
             my_data.time1 = t2;
             my_data.velocidade = velocity_angular*5;
             parametro=0;
-           // t1=difftime(t0, t1);// realiza a diferença entre os tempos de processamento
+           
         } 
         cont++;
         }else{

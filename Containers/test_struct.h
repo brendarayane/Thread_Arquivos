@@ -18,6 +18,7 @@ typedef struct
     
     double velocidade;
     double time1;
+    double t5, t4;
     road_time_t time;
     TEST_DATA data;
 }TIMESTAMPED_TEST_DATA;
